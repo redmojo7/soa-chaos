@@ -1,0 +1,36 @@
+﻿<Window x:Class="Client.Welcome"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client"
+        mc:Ignorable="d"
+        Title="Welcome" Height="450" Width="1100">
+    <Grid>
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="10,10,0,0" x:Name="WelcomeHeading" Text="Welcome:" VerticalAlignment="Top" FontSize="17" FontStretch="ExtraCondensed"/>
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="90,10,0,0" x:Name="textBoxWelcom"  VerticalAlignment="Top" FontSize="15" FontStretch="ExtraCondensed" />
+
+
+        <ListView Height="130" Width="968" HorizontalAlignment="Left" Margin="40,60,0,0" Name="lvServices" VerticalAlignment="Top">
+            <ListView.View>
+                <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information">
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="130"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Description}" Header="Description" Width="180"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ApiEndpoint}" Header="API Endpoint" Width="250"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=NumberOfOperands}" Header="Number Of Operands" Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=OperandType}" Header="Operand Type" Width="200"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Height="20" Width="120" Name="btnTest" Click="btnTest_Click" >Test</Button>
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="66,220,0,0" Name="serviceName" VerticalAlignment="Top" Width="120" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="66,250,0,0" Name="operand1" Text="operand 1" VerticalAlignment="Top" Width="60" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="66,280,0,0" Name="operand2" Text="operand 2" VerticalAlignment="Top" Width="60" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="66,310,0,0" Name="operand3" Text="operand 3" VerticalAlignment="Top" Width="60" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="138,250,0,0" Name="textBoxoperand1" VerticalAlignment="Top" Width="60" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="138,280,0,0" Name="textBoxoperand2" VerticalAlignment="Top" Width="60" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="138,310,0,0" Name="textBoxoperand3" VerticalAlignment="Top" Width="60" />
+        <Button Height="20" HorizontalAlignment="Left" Width="120" Margin="240,160,0,0" Name="btnCalculate" Click="btnCalculate_ClickAsync"></Button>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="420,290,0,0" Name="textBoxRresult" VerticalAlignment="Top" Width="60" />
+    </Grid>
+</Window>

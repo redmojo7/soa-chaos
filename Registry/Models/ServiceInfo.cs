@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-//
+
+
 // To parse this JSON data, add NuGet 'Newtonsoft.Json' then do:
 //
 //    using Registry.Models;
@@ -20,27 +21,31 @@ namespace Registry.Models
 
     public partial class ServiceInfo
     {
+        public ServiceInfo(string name, string description, Uri apiEndpoint, int numberOfOperands, string operandType)
+        {
+            Name = name;
+            Description = description;
+            ApiEndpoint = apiEndpoint;
+            NumberOfOperands = numberOfOperands;
+            OperandType = operandType;
+        }
+
         [JsonProperty("Name")]
         public string Name { get; set; }
 
         [JsonProperty("Description")]
         public string Description { get; set; }
 
-        [JsonProperty("“API endpoint")]
+        [JsonProperty("API endpoint")]
         public Uri ApiEndpoint { get; set; }
 
         [JsonProperty("number of operands")]
-        [JsonConverter(typeof(PurpleParseStringConverter))]
-        public long NumberOfOperands { get; set; }
+        [JsonConverter(typeof(ParseStringConverter))]
+        public int NumberOfOperands { get; set; }
 
         [JsonProperty("OperandType")]
         public string OperandType { get; set; }
-
-        [JsonProperty("published")]
-        [JsonConverter(typeof(FluffyParseStringConverter))]
-        public bool Published { get; set; }
     }
-
     public partial class ServiceInfo
     {
         public static List<ServiceInfo> FromJson(string json) => JsonConvert.DeserializeObject<List<ServiceInfo>>(json, Registry.Models.Converter.Settings);
@@ -64,20 +69,20 @@ namespace Registry.Models
         };
     }
 
-    internal class PurpleParseStringConverter : JsonConverter
+    internal class ParseStringConverter : JsonConverter
     {
-        public override bool CanConvert(Type t) => t == typeof(long) || t == typeof(long?);
+        public override bool CanConvert(Type t) => t == typeof(int) || t == typeof(int);
 
         public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
         {
             if (reader.TokenType == JsonToken.Null) return null;
             var value = serializer.Deserialize<string>(reader);
-            long l;
-            if (Int64.TryParse(value, out l))
+            int l;
+            if (Int32.TryParse(value, out l))
             {
                 return l;
             }
-            throw new Exception("Cannot unmarshal type long");
+            throw new Exception("Cannot unmarshal type int");
         }
 
         public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
@@ -87,43 +92,9 @@ namespace Registry.Models
                 serializer.Serialize(writer, null);
                 return;
             }
-            var value = (long)untypedValue;
+            var value = (int)untypedValue;
             serializer.Serialize(writer, value.ToString());
             return;
         }
-
-        public static readonly PurpleParseStringConverter Singleton = new PurpleParseStringConverter();
-    }
-
-    internal class FluffyParseStringConverter : JsonConverter
-    {
-        public override bool CanConvert(Type t) => t == typeof(bool) || t == typeof(bool?);
-
-        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
-        {
-            if (reader.TokenType == JsonToken.Null) return null;
-            var value = serializer.Deserialize<string>(reader);
-            bool b;
-            if (Boolean.TryParse(value, out b))
-            {
-                return b;
-            }
-            throw new Exception("Cannot unmarshal type bool");
-        }
-
-        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
-        {
-            if (untypedValue == null)
-            {
-                serializer.Serialize(writer, null);
-                return;
-            }
-            var value = (bool)untypedValue;
-            var boolString = value ? "true" : "false";
-            serializer.Serialize(writer, boolString);
-            return;
-        }
-
-        public static readonly FluffyParseStringConverter Singleton = new FluffyParseStringConverter();
     }
 }
