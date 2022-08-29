@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Registry.DAO;
+using Registry.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -11,9 +13,11 @@ namespace Registry.Controllers
     public class SearchController : ApiController
     {
         [HttpGet]
-        public IHttpActionResult Get(string key = null)
+        public IHttpActionResult Get(string key = "")
         {
-            return Ok(key);
+            ServiceDAO serviceATO = new ServiceDAO();
+            List<ServiceInfo> result = serviceATO.SearchService(key);
+            return Json<List<ServiceInfo>>(result);
         }
     }
 }
