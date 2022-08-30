@@ -7,11 +7,14 @@
         mc:Ignorable="d"
         Title="Welcome" Height="450" Width="1100">
     <Grid>
+
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="10,10,0,0" x:Name="WelcomeHeading" Text="Welcome:" VerticalAlignment="Top" FontSize="17" FontStretch="ExtraCondensed"/>
-        <TextBlock Height="23" HorizontalAlignment="Left" Margin="90,10,0,0" x:Name="textBoxWelcom"  VerticalAlignment="Top" FontSize="15" FontStretch="ExtraCondensed" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="100,10,0,0" x:Name="textBoxWelcom" Width ="100" VerticalAlignment="Top" FontSize="15" FontStretch="ExtraCondensed" />
 
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="360,20,0,0" Name="textBoxSearch" VerticalAlignment="Top" Width="100" />
+        <Button Height="23" HorizontalAlignment="Left" Width="120" Name="btnSearch" Click="btnSearch_Click" VerticalAlignment="Top" Margin="500,20,0,0">Search</Button>
 
-        <ListView Height="130" Width="968" HorizontalAlignment="Left" Margin="40,60,0,0" Name="lvServices" VerticalAlignment="Top">
+        <ListView Height="130" Width="968" HorizontalAlignment="Left" Margin="40,60,0,0" Name="lvServices" VerticalAlignment="Top" Grid.ColumnSpan="2">
             <ListView.View>
                 <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information">
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="130"/>
@@ -22,7 +25,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Height="20" Width="120" Name="btnTest" Click="btnTest_Click" >Test</Button>
+        <Button Height="23" Width="120" Name="btnTest" Click="btnTest_Click" HorizontalAlignment="Left" Margin="460,20,0,0">Test</Button>
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="66,220,0,0" Name="serviceName" VerticalAlignment="Top" Width="120" />
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="66,250,0,0" Name="operand1" Text="operand 1" VerticalAlignment="Top" Width="60" />
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="66,280,0,0" Name="operand2" Text="operand 2" VerticalAlignment="Top" Width="60" />
@@ -30,7 +33,7 @@
         <TextBox Height="23" HorizontalAlignment="Left" Margin="138,250,0,0" Name="textBoxoperand1" VerticalAlignment="Top" Width="60" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="138,280,0,0" Name="textBoxoperand2" VerticalAlignment="Top" Width="60" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="138,310,0,0" Name="textBoxoperand3" VerticalAlignment="Top" Width="60" />
-        <Button Height="20" HorizontalAlignment="Left" Width="120" Margin="240,160,0,0" Name="btnCalculate" Click="btnCalculate_ClickAsync"></Button>
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="420,290,0,0" Name="textBoxRresult" VerticalAlignment="Top" Width="60" />
+        <Button Height="23" HorizontalAlignment="Left" Width="120" Margin="240,286,0,125" Name="btnCalculate" Click="btnCalculate_ClickAsync"></Button>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="420,287,0,0" Name="textBoxRresult" VerticalAlignment="Top" Width="80" />
     </Grid>
 </Window>

@@ -9,24 +9,22 @@ using System.Web.Http;
 
 namespace Registry.Controllers
 {
-    [Route("api/Publish")]
+    [Route("api/publish")]
     public class PublishController : ApiController
     {
-        //[HttpPost]
-        //public IHttpActionResult Get(ServiceInfo serviceInfo = null)
-        [HttpGet]
-        public IHttpActionResult Get()
+        private ServiceDAO serviceDAO;
+        public PublishController()
         {
-            // check if it exist
+            serviceDAO = new ServiceDAO();
+        }
 
-            // if already published
-
-            // publish
-            ServiceInfo serviceInfo = new ServiceInfo("ADDTwoNumbers", "Adding two Number", new Uri("https://localhost:44392/ADDTwoNumbers"), 2, "integer");
-            ServiceDAO serviceDAO = new ServiceDAO();
+        [HttpPost]
+        public IHttpActionResult Publish(ServiceInfo serviceInfo)
+        {
             serviceDAO.PublishService(serviceInfo);
+            Console.WriteLine(serviceInfo.ToString());
 
-            return Ok(new {Consumes = "application/json" , Values = serviceInfo});
+            return Ok();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Registry.DAO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,9 +11,16 @@ namespace Registry.Controllers
     [Route("api/unpublish")]
     public class UnpublishController : ApiController
     {
-        [HttpGet]
-        public IHttpActionResult Get(string serviceName = null)
+        private ServiceDAO serviceDAO;
+        public UnpublishController()
         {
+            serviceDAO = new ServiceDAO();
+        }
+        [HttpPut]
+        public IHttpActionResult Unpublish(string serviceName = null)
+        {
+            Console.WriteLine(serviceName);
+            serviceDAO.UnPublishService(serviceName);
             return Ok(serviceName);
         }
     }

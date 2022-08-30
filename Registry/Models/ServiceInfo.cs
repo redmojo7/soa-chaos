@@ -21,6 +21,10 @@ namespace Registry.Models
 
     public partial class ServiceInfo
     {
+        public ServiceInfo()
+        {
+        }
+
         public ServiceInfo(string name, string description, Uri apiEndpoint, int numberOfOperands, string operandType)
         {
             Name = name;
@@ -45,6 +49,11 @@ namespace Registry.Models
 
         [JsonProperty("OperandType")]
         public string OperandType { get; set; }
+
+        public override string ToString()
+        {
+            return "Name : " + this.Name + ", API endpoint: " + this.ApiEndpoint;
+        }
     }
     public partial class ServiceInfo
     {

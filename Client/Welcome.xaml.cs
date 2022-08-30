@@ -118,5 +118,18 @@ namespace Client
             textBoxRresult.Visibility = Visibility.Visible;
             textBoxRresult.Text = result.Content;
         }
+
+        private async void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            string URL = "https://localhost:44388/";
+            client = new RestClient(URL);
+            RestRequest request = new RestRequest("api/search", Method.Get);
+            request.AddParameter("key", textBoxSearch.Text);
+            RestResponse restResponse = await client.ExecuteAsync(request);
+
+            // Console.WriteLine(restResponse.Content);
+            services = JsonConvert.DeserializeObject<List<ServiceInfo>>(restResponse.Content);
+            lvServices.ItemsSource = services;
+        }
     }
 }

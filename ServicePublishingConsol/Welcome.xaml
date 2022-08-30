@@ -1,0 +1,47 @@
+﻿<Window x:Class="ServicePublishingConsol.Welcome"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ServicePublishingConsol"
+        mc:Ignorable="d"
+        Title="Welcome" Height="450" Width="1100">
+    <Grid>
+
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="10,10,0,0" x:Name="WelcomeHeading" Text="Welcome:" VerticalAlignment="Top" FontSize="17" FontStretch="ExtraCondensed"/>
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="100,10,0,0" x:Name="textBoxWelcom"  Width="100" VerticalAlignment="Top" FontSize="15" FontStretch="ExtraCondensed" />
+
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="40,40,0,0"  Name="textBlockName"             Text="Name" VerticalAlignment="Top" Width="130" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="170,40,0,0" Name="textBlockDescription"      Text="Description" VerticalAlignment="Top" Width="180" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="350,40,0,0" Name="textBlockApiEndpoint"      Text="ApiEndpoint" VerticalAlignment="Top" Width="250" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="600,40,0,0" Name="textBlockNumberOfOperands" Text="NumberOfOperands" VerticalAlignment="Top" Width="200" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="800,40,0,0" Name="textBlockOperandType"      Text="OperandType" VerticalAlignment="Top" Width="200" />
+
+
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="40,60,0,0" Name="textBoxName" VerticalAlignment="Top" Width="130" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="170,60,0,0" Name="textBoxDescription" VerticalAlignment="Top" Width="180" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="350,60,0,0" Name="textBoxApiEndpoint" VerticalAlignment="Top" Width="250" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="600,60,0,0" Name="textBoxNumberOfOperands" VerticalAlignment="Top" Width="200" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="800,60,0,0" Name="textBoxOperandType" VerticalAlignment="Top" Width="200" />
+
+
+
+        <Button Height="23" Width="120" Name="btnPublish" Click="btnPublish_Click" HorizontalAlignment="Left" Margin="440,100,0,0" VerticalAlignment="Top">Publish</Button>
+
+        <ListView Height="130" Width="968" HorizontalAlignment="Left" Margin="40,140,0,0" Name="lvServices" VerticalAlignment="Top" Grid.ColumnSpan="2">
+            <ListView.View>
+                <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information">
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="130"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Description}" Header="Description" Width="180"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ApiEndpoint}" Header="API Endpoint" Width="250"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=NumberOfOperands}" Header="Number Of Operands" Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=OperandType}" Header="Operand Type" Width="200"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Button Height="23" Width="120" Name="btnUnpublish" Click="btnUnpublish_Click" HorizontalAlignment="Left" Margin="440,290,0,0" VerticalAlignment="Top">Unpublish</Button>
+
+
+    </Grid>
+</Window>

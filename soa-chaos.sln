@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PublishingConsole", "Publis
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{4DBF60A6-8143-42A1-A7DF-AA28825ECB8E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServicePublishingConsol", "ServicePublishingConsol\ServicePublishingConsol.csproj", "{44F003E0-F061-4A2D-8396-648F3B482DCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{4DBF60A6-8143-42A1-A7DF-AA28825ECB8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DBF60A6-8143-42A1-A7DF-AA28825ECB8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DBF60A6-8143-42A1-A7DF-AA28825ECB8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44F003E0-F061-4A2D-8396-648F3B482DCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44F003E0-F061-4A2D-8396-648F3B482DCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44F003E0-F061-4A2D-8396-648F3B482DCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44F003E0-F061-4A2D-8396-648F3B482DCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

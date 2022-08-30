@@ -23,43 +23,55 @@ namespace Registry.DAO
         {
             // GetAllService
             List<ServiceInfo> serviceInfos = GetAllService();
-            var serviceNames = serviceInfos.Select(p => p.Name).Distinct().ToList();
-            if (serviceNames.Contains(newService.Name))
+            if (serviceInfos != null && serviceInfos.Count > 0)
             {
-                // update a service and publish it
-                ServiceInfo old = serviceInfos.FindAll(p => p.Name == newService.Name).Distinct().ToList()[0];
-                serviceInfos.Remove(old);
-
+                var serviceNames = serviceInfos.Select(p => p.Name).Distinct().ToList();
+                if (serviceNames.Contains(newService.Name))
+                {
+                    // update a service and publish it
+                    ServiceInfo old = serviceInfos.FindAll(p => p.Name == newService.Name).Distinct().ToList()[0];
+                    serviceInfos.Remove(old);
+               }
+            }
+            else 
+            {
+                serviceInfos = new List<ServiceInfo>();
             }
             // plublish a new servivce
             serviceInfos.Add(newService);
-
             // save
             var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(serviceInfos);
             File.WriteAllText(serviceFilePath, jsonString);
         }
 
-        public void UnPublishService(ServiceInfo newService)
+        public void UnPublishService(string serviceName)
         {
             // GetAllService
             List<ServiceInfo> serviceInfos = GetAllService();
-            var serviceNames = serviceInfos.Select(p => p.Name).Distinct().ToList();
-            if (serviceNames.Contains(newService.Name))
+            if (serviceInfos != null && serviceInfos.Count > 0)
             {
-                // remove a service
-                ServiceInfo old = serviceInfos.FindAll(p => p.Name == newService.Name).Distinct().ToList()[0];
-                serviceInfos.Remove(old);
-            }
+                var serviceNames = serviceInfos.Select(p => p.Name).Distinct().ToList();
+                if (serviceNames.Contains(serviceName))
+                {
+                    // remove a service
+                    ServiceInfo old = serviceInfos.FindAll(p => p.Name == serviceName).Distinct().ToList()[0];
+                    serviceInfos.Remove(old);
+                }
 
-            // save
-            var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(serviceInfos);
-            File.WriteAllText(serviceFilePath, jsonString);
+                // save
+                var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(serviceInfos);
+                File.WriteAllText(serviceFilePath, jsonString);
+            }
         }
 
         public List<ServiceInfo> SearchService(string key)
         {
             List<ServiceInfo> serviceInfos = GetAllService();
-            List<ServiceInfo> result = serviceInfos.FindAll(p => p.Name.ToLower().Contains(key.ToLower()));
+            List<ServiceInfo> result = null;
+            if (serviceInfos != null && serviceInfos.Count > 0 && key != null && key != "")
+            {
+                result = serviceInfos.FindAll(p => p.Name.ToLower().Contains(key.ToLower()));
+            }
             return result;
         }
     }
