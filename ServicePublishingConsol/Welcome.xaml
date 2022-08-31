@@ -5,11 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ServicePublishingConsol"
         mc:Ignorable="d"
-        Title="Welcome" Height="450" Width="1100">
+        Title="Welcome" Height="500" Width="1050">
     <Grid>
 
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="10,10,0,0" x:Name="WelcomeHeading" Text="Welcome:" VerticalAlignment="Top" FontSize="17" FontStretch="ExtraCondensed"/>
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="100,10,0,0" x:Name="textBoxWelcom"  Width="100" VerticalAlignment="Top" FontSize="15" FontStretch="ExtraCondensed" />
+        <TextBlock Height="35" HorizontalAlignment="Center" x:Name="Title" Text="Service Publishing Consol" VerticalAlignment="Top" FontSize="24" FontStretch="ExtraCondensed" FontWeight="Bold"/>
+
 
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="40,40,0,0"  Name="textBlockName"             Text="Name" VerticalAlignment="Top" Width="130" />
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="170,40,0,0" Name="textBlockDescription"      Text="Description" VerticalAlignment="Top" Width="180" />

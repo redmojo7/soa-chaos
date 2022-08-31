@@ -21,8 +21,6 @@ namespace Client
     {
         private RestClient client;
 
-        private PublishServiceInterface foob;
-
         List<ServiceInfo> services;
 
         ServiceInfo current;
@@ -41,17 +39,6 @@ namespace Client
             btnCalculate.Visibility = Visibility.Hidden;
             serviceName.Visibility = Visibility.Hidden;
             textBoxRresult.Visibility = Visibility.Hidden; 
-
-
-            // This is a factory that generates remote connections to our remote class. This is what hides the RPC stuff!
-            ChannelFactory<PublishServiceInterface> channelFactory; NetTcpBinding tcp = new NetTcpBinding();
-            // Set the URL and create the connection!
-            string PublishingURL = "net.tcp://localhost:8100/PublishingConsole";
-            //channelFactory = new ChannelFactory<PublishServiceInterface>(tcp, PublishingURL);
-            //foob = channelFactory.CreateChannel();
-
-            //foob.Login()
-
 
             string URL = "https://localhost:44388/";
             client = new RestClient(URL);

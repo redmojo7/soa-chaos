@@ -44,17 +44,17 @@ namespace Registry.DAO
             File.WriteAllText(serviceFilePath, jsonString);
         }
 
-        public void UnPublishService(string serviceName)
+        public void UnPublishService(string apiEndpoint)
         {
             // GetAllService
             List<ServiceInfo> serviceInfos = GetAllService();
             if (serviceInfos != null && serviceInfos.Count > 0)
             {
-                var serviceNames = serviceInfos.Select(p => p.Name).Distinct().ToList();
-                if (serviceNames.Contains(serviceName))
+                var endpoins = serviceInfos.Select(p => p.ApiEndpoint.ToString()).Distinct().ToList();
+                if (endpoins.Contains(apiEndpoint))
                 {
                     // remove a service
-                    ServiceInfo old = serviceInfos.FindAll(p => p.Name == serviceName).Distinct().ToList()[0];
+                    ServiceInfo old = serviceInfos.FindAll(p => p.ApiEndpoint.ToString() == apiEndpoint).Distinct().ToList()[0];
                     serviceInfos.Remove(old);
                 }
 

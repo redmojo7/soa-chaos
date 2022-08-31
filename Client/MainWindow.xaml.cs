@@ -30,18 +30,9 @@ namespace Client
 
         private Registration registration = new Registration();
         private Welcome welcome = new Welcome();
-        private PublishServiceInterface foob;
         public MainWindow()
         {
             InitializeComponent();
-    
-            // This is a factory that generates remote connections to our remote class. This is what hides the RPC stuff!
-            ChannelFactory<PublishServiceInterface> channelFactory; NetTcpBinding tcp = new NetTcpBinding();
-            // Set the URL and create the connection!
-            string URL = "net.tcp://localhost:8100/PublishingConsole";
-            //channelFactory = new ChannelFactory<PublishServiceInterface>(tcp, URL);
-            //foob = channelFactory.CreateChannel();
-
         }
 
         private void ButtonLogin_Click(object sender, RoutedEventArgs e)

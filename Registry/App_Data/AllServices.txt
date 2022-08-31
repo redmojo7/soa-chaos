@@ -1,1 +1,1 @@
-[{"Name":"ADDTwoNumbers","Description":"Adding two Number","API endpoint":"https://localhost:44392/api/ADDTwoNumbers","number of operands":"2","OperandType":"integer"}]
+[]

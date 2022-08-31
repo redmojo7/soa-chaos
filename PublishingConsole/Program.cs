@@ -9,26 +9,49 @@ namespace PublishingConsole
 {
     internal class Program
     {
+        private static RegisterProgram register;
+        private static LoginProgram login;
+        public Program()
+        {
+
+        }
+
         static void Main(string[] args)
         {
-            Console.WriteLine("hey so like welcome to data server");
-            // This is the actual host service system
-            ServiceHost host;
-            // This represents a tcp/ip binding in the Windows network stack
-            NetTcpBinding tcp = new NetTcpBinding();
-            // Bind server to the implementation of DataServer
-            host = new ServiceHost(typeof(PublishServiceImpl));
-            /* Present the publicly accessible interface to the client. 0.0.0.0 tells .net to
-             accept on any interface. :8100 means this will use port 8100. DataService is a name for the
-             actual service, this can be any string.*/
 
-            host.AddServiceEndpoint(typeof(PublishServiceInterface), tcp, "net.tcp://0.0.0.0:8100/PublishingConsole");
-            // And open the host for business!
-            host.Open();
+            register = new RegisterProgram();
+            login = new LoginProgram();
+
+            bool successfull = false;
+            while (!successfull) 
+            {
+                //Start:
+                Console.WriteLine("Welcom to the Service Publishing Console.\r");
+                Console.WriteLine("------------------------\n");
+                // Ask the user to choose an option.
+                Console.WriteLine("Choose an option from the following list:");
+                Console.WriteLine("\tl - Login");
+                Console.WriteLine("\tr - Registration");
+                Console.Write("Your option? ");
+
+                // Use a switch statement to do the math.
+                switch (Console.ReadLine())
+                {
+                    case "l":
+                        login.Login();
+                        break;
+                    case "r":
+                        register.Register();
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+
+
             Console.WriteLine("System Online");
             Console.ReadLine();
-            // Don't forget to close the host after you're done!
-            host.Close();
         }
     }
 }

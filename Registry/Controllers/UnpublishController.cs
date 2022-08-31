@@ -16,12 +16,12 @@ namespace Registry.Controllers
         {
             serviceDAO = new ServiceDAO();
         }
-        [HttpPut]
-        public IHttpActionResult Unpublish(string serviceName = null)
+        [HttpGet]
+        public IHttpActionResult Unpublish(string apiEndpoint)
         {
-            Console.WriteLine(serviceName);
-            serviceDAO.UnPublishService(serviceName);
-            return Ok(serviceName);
+            Console.WriteLine("Unpublish: ", apiEndpoint);
+            serviceDAO.UnPublishService(apiEndpoint);
+            return Ok();
         }
     }
 }
