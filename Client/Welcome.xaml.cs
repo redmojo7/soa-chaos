@@ -10,7 +10,9 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
-
+using System.Windows.Controls.Primitives;
+using System.Windows.Controls;
+using Authenticator;
 
 namespace Client
 {
@@ -21,9 +23,15 @@ namespace Client
     {
         private RestClient client;
 
-        List<ServiceInfo> services;
+        private List<ServiceInfo> services;
 
-        ServiceInfo current;
+        private ServiceInfo current;
+
+        public static MainWindow login;
+
+        private AuthServiceInterface foob;
+
+        public string token;
 
         public Welcome()
         {
@@ -40,14 +48,12 @@ namespace Client
             serviceName.Visibility = Visibility.Hidden;
             textBoxRresult.Visibility = Visibility.Hidden; 
 
-            string URL = "https://localhost:44388/";
-            client = new RestClient(URL);
-            RestRequest restRequest = new RestRequest("api/AllServices", Method.Get);
-            RestResponse restResponse = client.Execute(restRequest);
-
-            // Console.WriteLine(restResponse.Content);
-            services = JsonConvert.DeserializeObject<List<ServiceInfo>>(restResponse.Content);
-            lvServices.ItemsSource = services;
+            ChannelFactory<AuthServiceInterface> foobFactory;
+            NetTcpBinding tcp = new NetTcpBinding();
+            //Set the URL and create the connection!
+            string Auth_URL = "net.tcp://localhost:8100/AuthService";
+            foobFactory = new ChannelFactory<AuthServiceInterface>(tcp, Auth_URL);
+            foob = foobFactory.CreateChannel();
         }
 
         private void btnTest_Click(object sender, RoutedEventArgs e)
@@ -101,6 +107,7 @@ namespace Client
             {
                 request.AddParameter("operand3", textBoxoperand3.Text);
             }
+
             RestResponse result = await client.GetAsync(request);
             textBoxRresult.Visibility = Visibility.Visible;
             textBoxRresult.Text = result.Content;
@@ -117,6 +124,30 @@ namespace Client
             // Console.WriteLine(restResponse.Content);
             services = JsonConvert.DeserializeObject<List<ServiceInfo>>(restResponse.Content);
             lvServices.ItemsSource = services;
+        }
+
+        private void btnLogout_Click(object sender, RoutedEventArgs e)
+        {
+            Logout();
+        }
+
+        private void Logout()
+        {
+            this.Opacity = 0;
+            this.Hide();
+            login.Opacity = 1;
+            login.textBoxName.Text = "";
+            login.passwordBox.Password = "";
+            login.errormessage.Text = "";
+            login.Show();
+        }
+
+        private string ValidateToken()
+        {
+            string result = null;
+            foob.Validate(token, out result);
+
+            return result;
         }
     }
 }

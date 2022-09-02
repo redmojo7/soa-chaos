@@ -145,6 +145,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Authenticator\Authenticator.csproj">
+      <Project>{CD23EFB7-A06A-461C-BAAB-31669BD1EF0B}</Project>
+      <Name>Authenticator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PublishingConsole\PublishingConsole.csproj">
       <Project>{EB16270D-2302-418A-A680-C90A66B73F17}</Project>
       <Name>PublishingConsole</Name>

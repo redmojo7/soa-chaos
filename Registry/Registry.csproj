@@ -52,6 +52,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -166,6 +168,7 @@
     <Compile Include="Controllers\UnpublishController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DAO\ServiceDAO.cs" />
+    <Compile Include="DTO\BadInfoDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -225,7 +228,12 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Authenticator\Authenticator.csproj">
+      <Project>{CD23EFB7-A06A-461C-BAAB-31669BD1EF0B}</Project>
+      <Name>Authenticator</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
   </ItemGroup>

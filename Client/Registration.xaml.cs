@@ -1,4 +1,5 @@
-﻿using PublishingConsole;
+﻿using Authenticator;
+using PublishingConsole;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,15 +25,28 @@ namespace Client
     {
         //MainWindow login = new MainWindow();
         Welcome welcome = new Welcome();
+        private AuthServiceInterface foob;
+        public static MainWindow login;
         public Registration()
         {
             InitializeComponent();
+            ChannelFactory<AuthServiceInterface> foobFactory;
+            NetTcpBinding tcp = new NetTcpBinding();
+            //Set the URL and create the connection!
+            string URL = "net.tcp://localhost:8100/AuthService";
+            foobFactory = new ChannelFactory<AuthServiceInterface>(tcp, URL);
+            foob = foobFactory.CreateChannel();
         }
 
         private void ButtonLogin_ClickButton_Click(object sender, RoutedEventArgs e)
         {
-            //login.Show();
-            Close();
+            this.Opacity = 0;
+            this.Hide();
+            login.Opacity = 1;
+            login.textBoxName.Text = "";
+            login.passwordBox.Password = "";
+            login.errormessage.Text = "";
+            login.Show();
         }
 
         private void ButtonRegistration_Click(object sender, RoutedEventArgs e)
@@ -52,12 +66,17 @@ namespace Client
             {
                 string name = textBoxName.Text;
                 string password = passwordBox.Password;
- 
-                if (name != "")
+                // register
+                foob.Register(name, password, out string result);
+                if (result != "")
                 {
-                    welcome.textBoxWelcom.Text = name;//Sending value from one form to another form.  
-                    welcome.Show();
-                    Close();
+                    this.Opacity = 0;
+                    this.Hide();
+                    login.Opacity = 1;
+                    login.textBoxName.Text = "";
+                    login.passwordBox.Password = "";
+                    login.errormessage.Text = "";
+                    login.Show();
                 }
                 else
                 {
