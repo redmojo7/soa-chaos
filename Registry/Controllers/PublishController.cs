@@ -1,4 +1,5 @@
 ﻿using Registry.DAO;
+using Registry.DTO;
 using Registry.Models;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,11 @@ namespace Registry.Controllers
         [HttpPost]
         public IHttpActionResult Publish(ServiceInfo serviceInfo)
         {
+            string result = serviceDAO.ValidateToken(this.Request.Headers);
+            if (result != "validated")
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.Unauthorized, new BadInfoDTO("Denied", "Authentication Error")));
+            }
             serviceDAO.PublishService(serviceInfo);
             Console.WriteLine(serviceInfo.ToString());
 

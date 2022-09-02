@@ -68,7 +68,7 @@ namespace Client
                 string password = passwordBox.Password;
                 // register
                 foob.Register(name, password, out string result);
-                if (result != "")
+                if (result == "successfully register")
                 {
                     this.Opacity = 0;
                     this.Hide();
@@ -80,7 +80,7 @@ namespace Client
                 }
                 else
                 {
-                    errormessage.Text = "Sorry! Please enter existing name/password.";
+                    errormessage.Text = "Sorry! Please enter anther user name.";
                 }
             }
         }

@@ -80,14 +80,12 @@
   <ItemGroup>
     <Compile Include="WelcomeProgram.cs" />
     <Compile Include="LoginProgram.cs" />
-    <Compile Include="LoginInfo.cs" />
     <Compile Include="OperationProgram.cs" />
     <Compile Include="PasswordUtil.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PublishServiceATO.cs" />
     <Compile Include="RegisterProgram.cs" />
-    <Compile Include="RegistrationInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

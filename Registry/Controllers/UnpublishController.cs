@@ -1,4 +1,5 @@
 ﻿using Registry.DAO;
+using Registry.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,11 @@ namespace Registry.Controllers
         [HttpGet]
         public IHttpActionResult Unpublish(string apiEndpoint)
         {
+            string result = serviceDAO.ValidateToken(this.Request.Headers);
+            if (result != "validated")
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.Unauthorized, new BadInfoDTO("Denied", "Authentication Error")));
+            }
             Console.WriteLine("Unpublish: ", apiEndpoint);
             serviceDAO.UnPublishService(apiEndpoint);
             return Ok();

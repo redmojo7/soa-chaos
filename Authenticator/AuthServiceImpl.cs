@@ -40,10 +40,15 @@ namespace Authenticator
         public void Register(string name, string password, out string result)
         {
             List<User> registedUsers = AllUsers();
+            var users = registedUsers.FindAll(p => p.userName == name);
+            if (users != null && users.Count > 0)
+            {
+                result = "already registered";
+            }
             registedUsers.Add(new User(name, password));
             var jsonString = JsonConvert.SerializeObject(registedUsers);
             File.WriteAllText(usersFilePath, jsonString);
-            result = "successfully registere";
+            result = "successfully register";
         }
 
 
