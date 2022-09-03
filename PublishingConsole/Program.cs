@@ -22,8 +22,8 @@ namespace PublishingConsole
             register = new RegisterProgram();
             login = new LoginProgram();
 
-            bool successfull = false;
-            while (!successfull) 
+            bool successful = false;
+            while (!successful) 
             {
                 //Start:
                 Console.WriteLine("Welcom to the Service Publishing Console.\r");

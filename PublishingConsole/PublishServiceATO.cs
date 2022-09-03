@@ -1,9 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using Authenticator;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Registry.Models;
 using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -13,6 +16,7 @@ namespace PublishingConsole
     public class PublishServiceATO
     {
         private RestClient client;
+        private AuthServiceInterface foob;
         public PublishServiceATO()
         {
             string URL = "https://localhost:44388/";
@@ -20,32 +24,26 @@ namespace PublishingConsole
             RestRequest restRequest = new RestRequest("api/AllServices", Method.Get);
             RestResponse restResponse = client.Execute(restRequest);
 
-        }
-        public void Register()
-        { 
-        
-        }
+            ChannelFactory<AuthServiceInterface> foobFactory;
+            NetTcpBinding tcp = new NetTcpBinding();
+            //Set the URL and create the connection!
+            string AUTH_URL = "net.tcp://localhost:8100/AuthService";
+            foobFactory = new ChannelFactory<AuthServiceInterface>(tcp, AUTH_URL);
+            foob = foobFactory.CreateChannel();
 
-        public void Login()
+        }
+        public string Register(string userName, string password)
         {
-
+            string result = null;
+            foob.Register(userName, password, out result);
+            return result;
         }
 
-        public async Task PublishAsync(string name, string description, Uri apiEndpoint, int numberOfOperands, string operandType)
+        public string Login(string userName, string password)
         {
-            RestRequest restRequest = new RestRequest("api/publish", Method.Post);
-            ServiceInfo info = new ServiceInfo(name, description, apiEndpoint,numberOfOperands, operandType);
-            restRequest.AddJsonBody(JsonConvert.SerializeObject(info));
-            restRequest.AddHeader("Content-type", "application/json");
-            RestResponse restResponse = await client.ExecuteAsync(restRequest);
-        }
-
-        public async Task UnPublishAsync(string uriStr)
-        {
-            //Uri uri = new Uri(uriStr);
-            RestRequest restRequest = new RestRequest("api/unpublish", Method.Put);
-            restRequest.AddParameter("serviceName", uriStr);
-            RestResponse restResponse = await client.ExecuteAsync(restRequest);
+            string result = null;
+            foob.Login(userName, password, out result);
+            return result;
         }
     }
 }

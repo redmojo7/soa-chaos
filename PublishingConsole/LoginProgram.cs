@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Authenticator;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,35 +12,39 @@ namespace PublishingConsole
 {
     public class LoginProgram
     {
-        WelcomeProgram welcome;
+        private WelcomeProgram welcome;
+        private AuthServiceInterface foob;
+        private PublishServiceATO publishServiceATO;
+        private string token;
         public LoginProgram()
         {
             welcome = new WelcomeProgram();
+            publishServiceATO = new PublishServiceATO();
         }
 
         internal void Login()
         {
-            bool successfull = false;
-            while (!successfull)
+            bool successful = false;
+            while (!successful)
             {
+                string result = null;
                 Console.WriteLine("Write your username:");
                 var username = Console.ReadLine();
                 Console.WriteLine("Enter your password:");
-                SecureString password = PasswordUtil.GetPassword();
-                Console.WriteLine(password);
-                if (username != "")
+                string password = PasswordUtil.GetPassword();
+                // login
+                result = publishServiceATO.Login(username, password);
+                if (result != null && result.Length > 0)
                 {
-                    Console.WriteLine("You have successfully logged in !!!");
-                    //Console.ReadLine();
-                    successfull = true;
-                    //break;
+                    Console.WriteLine("\nYou have successfully logged in !!!");
+                    token = result;
+                    successful = true;
+                    welcome.Welcome(token);
                 }
-
-                if (!successfull)
+                else 
                 {
-                    Console.WriteLine("Your username or password is incorect, try again !!!");
+                    Console.WriteLine("\nYour username or password is incorect, try again !!!");
                 }
-                welcome.Welcome();
             }
         }
     }

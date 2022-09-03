@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Registry.DTO
+namespace Authenticator
 {
     public class BadInfoDTO
     {

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
-        Title="Welcome" Height="500" Width="1050">
+        Title="Welcome" Height="660" Width="1050">
     <Grid>
 
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="10,10,0,0" x:Name="WelcomeHeading" Text="Welcome:" VerticalAlignment="Top" FontSize="17" FontStretch="ExtraCondensed"/>
@@ -29,7 +29,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Height="23" Width="120" Name="btnTest" Click="btnTest_Click" HorizontalAlignment="Left" Margin="460,224,0,187">Test</Button>
+        <Button Height="23" Width="120" Name="btnTest" Click="btnTest_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="460,224,0,187">Test</Button>
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="66,220,0,0" Name="serviceName" VerticalAlignment="Top" Width="120" />
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="66,260,0,0" Name="operand1" Text="operand 1" VerticalAlignment="Top" Width="60" />
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="66,290,0,0" Name="operand2" Text="operand 2" VerticalAlignment="Top" Width="60" />
@@ -37,7 +37,7 @@
         <TextBox Height="23" HorizontalAlignment="Left" Margin="138,260,0,0" Name="textBoxoperand1" VerticalAlignment="Top" Width="60" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="138,290,0,0" Name="textBoxoperand2" VerticalAlignment="Top" Width="60" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="138,320,0,0" Name="textBoxoperand3" VerticalAlignment="Top" Width="60" />
-        <Button Height="23" HorizontalAlignment="Left" Width="120" Margin="240,292,0,169" Name="btnCalculate" Click="btnCalculate_ClickAsync"></Button>
+        <Button Height="23" HorizontalAlignment="Left" Width="120" Margin="240,292,0,169" Name="btnCalculate" VerticalAlignment="Top" Click="btnCalculate_ClickAsync"></Button>
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="410,290,0,0" Name="result" Text="result" VerticalAlignment="Top" Width="40" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="459,290,0,0" Name="textBoxRresult" VerticalAlignment="Top" Width="80" />
     </Grid>

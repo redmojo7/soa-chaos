@@ -10,32 +10,37 @@ namespace PublishingConsole
     public class RegisterProgram
     {
         private WelcomeProgram welcome;
+        private PublishServiceATO publish;
         public RegisterProgram()
         {
             welcome = new WelcomeProgram();
+            publish =  new PublishServiceATO();
         }
 
         internal void Register()
         {
-            bool successfull = false;
-            while (!successfull)
+            bool successful = false;
+            while (!successful)
             {
+                string result = null;
                 Console.WriteLine("Enter your username:");
                 var username = Console.ReadLine();
 
                 Console.WriteLine("Enter your password:");
-                SecureString password = PasswordUtil.GetPassword();
-                Console.WriteLine(password);
+                string password = PasswordUtil.GetPassword();
 
-                if (username != "")
+                result = publish.Register(username, password);
+                if (result == "successfully register")
                 {
-                    Console.WriteLine("You have successfully registered !!!");
-                    //Console.ReadLine();
-                    successfull = true;
-                    //break;
+                    Console.WriteLine("\nYou have successfully registered !!!");
+                    Console.WriteLine("Please login now.");
+                }
+                else if(result == "already registered")
+                {
+                    Console.WriteLine("\nThat username is taken. Try another.");
                 }
             }
-            welcome.Welcome();
+            successful = true;
         }
     }
 }

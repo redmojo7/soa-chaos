@@ -15,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace Client
 {
@@ -27,9 +28,13 @@ namespace Client
         Welcome welcome = new Welcome();
         private AuthServiceInterface foob;
         public static MainWindow login;
+        private string username, password;
         public Registration()
         {
             InitializeComponent();
+            username = null;
+            password = null;
+
             ChannelFactory<AuthServiceInterface> foobFactory;
             NetTcpBinding tcp = new NetTcpBinding();
             //Set the URL and create the connection!
@@ -64,10 +69,24 @@ namespace Client
             }
             else
             {
-                string name = textBoxName.Text;
-                string password = passwordBox.Password;
+                username = textBoxName.Text;
+                password = passwordBox.Password;
                 // register
-                foob.Register(name, password, out string result);
+                RegisterAction();
+            }
+        }
+
+        private async void RegisterAction()
+        {
+            Task<string> registerTask = new Task<string>(RegisterRequest);
+            registerTask.Start();
+            // set timeout for async call
+            int timeout = 4000;
+            if (await Task.WhenAny(registerTask, Task.Delay(timeout)) == registerTask)
+            {
+                string result = registerTask.Result;
+                // task completed within timeout
+                Console.WriteLine("result :  " + result);
                 if (result == "successfully register")
                 {
                     this.Opacity = 0;
@@ -83,6 +102,26 @@ namespace Client
                     errormessage.Text = "Sorry! Please enter anther user name.";
                 }
             }
+            else
+            {
+                // timeout logic
+                MessageBox.Show("Sorry, search time out!", "Message");
+            }
+
+        }
+
+        private string RegisterRequest()
+        {
+            string result = null;
+            foob.Register(username, password, out result);
+            return result;
+        }
+
+        internal void ClearValue()
+        {
+            this.textBoxName.Text = "";
+            this.passwordBox.Password = "";
+            this.errormessage.Text = "";
         }
     }
 }

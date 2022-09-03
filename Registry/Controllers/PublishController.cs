@@ -1,5 +1,4 @@
 ﻿using Registry.DAO;
-using Registry.DTO;
 using Registry.Models;
 using System;
 using System.Collections.Generic;
@@ -7,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Authenticator;
 
 namespace Registry.Controllers
 {

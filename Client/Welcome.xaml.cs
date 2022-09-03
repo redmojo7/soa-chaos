@@ -21,7 +21,6 @@ namespace Client
     /// </summary>
     public partial class Welcome : Window
     {
-        private RestClient client;
 
         private List<ServiceInfo> services;
 
@@ -46,7 +45,8 @@ namespace Client
             textBoxoperand3.Visibility = Visibility.Hidden;
             btnCalculate.Visibility = Visibility.Hidden;
             serviceName.Visibility = Visibility.Hidden;
-            textBoxRresult.Visibility = Visibility.Hidden; 
+            textBoxRresult.Visibility = Visibility.Hidden;
+            result.Visibility = Visibility.Hidden;
 
             ChannelFactory<AuthServiceInterface> foobFactory;
             NetTcpBinding tcp = new NetTcpBinding();
@@ -99,31 +99,51 @@ namespace Client
         {
             Console.WriteLine(current.ApiEndpoint);
             //
-            client = new RestClient(current.ApiEndpoint);
+            RestClient client = new RestClient(current.ApiEndpoint);
             RestRequest request = new RestRequest();
             request.AddParameter("operand1", textBoxoperand1.Text);
             request.AddParameter("operand2", textBoxoperand2.Text);
+            request.AddHeader("token", token);
             if (current.NumberOfOperands == 3)
             {
                 request.AddParameter("operand3", textBoxoperand3.Text);
             }
 
-            RestResponse result = await client.GetAsync(request);
-            textBoxRresult.Visibility = Visibility.Visible;
-            textBoxRresult.Text = result.Content;
+            RestResponse response = await client.ExecuteGetAsync(request);
+            if (response.IsSuccessful)
+            {
+                textBoxRresult.Visibility = Visibility.Visible;
+                textBoxRresult.Text = response.Content;
+                result.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                BadInfoDTO badInfoDTO = JsonConvert.DeserializeObject<BadInfoDTO>(response.Content);
+                MessageBox.Show(badInfoDTO.Reason, badInfoDTO.Status);
+            }
         }
 
         private async void btnSearch_Click(object sender, RoutedEventArgs e)
         {
             string URL = "https://localhost:44388/";
-            client = new RestClient(URL);
+            RestClient client = new RestClient(URL);
             RestRequest request = new RestRequest("api/search", Method.Get);
             request.AddParameter("key", textBoxSearch.Text);
+            request.AddHeader("token", token);
             RestResponse restResponse = await client.ExecuteAsync(request);
 
-            // Console.WriteLine(restResponse.Content);
-            services = JsonConvert.DeserializeObject<List<ServiceInfo>>(restResponse.Content);
-            lvServices.ItemsSource = services;
+            Console.WriteLine(restResponse.StatusCode);
+            Console.WriteLine(restResponse.Content);
+            if (restResponse.IsSuccessful)
+            {
+                services = JsonConvert.DeserializeObject<List<ServiceInfo>>(restResponse.Content);
+                lvServices.ItemsSource = services;
+            }
+            else
+            {
+                BadInfoDTO badInfoDTO = JsonConvert.DeserializeObject<BadInfoDTO>(restResponse.Content);
+                MessageBox.Show(badInfoDTO.Reason, badInfoDTO.Status);
+            }
         }
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)
@@ -136,18 +156,8 @@ namespace Client
             this.Opacity = 0;
             this.Hide();
             login.Opacity = 1;
-            login.textBoxName.Text = "";
-            login.passwordBox.Password = "";
-            login.errormessage.Text = "";
+            login.ClearValue();
             login.Show();
-        }
-
-        private string ValidateToken()
-        {
-            string result = null;
-            foob.Validate(token, out result);
-
-            return result;
         }
     }
 }

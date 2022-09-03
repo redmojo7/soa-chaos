@@ -1,7 +1,6 @@
 ﻿using Authenticator;
 using Newtonsoft.Json;
 using PublishingConsole;
-using Registry.DTO;
 using Registry.Models;
 using RestSharp;
 using System;
@@ -22,6 +21,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace Client
 {
@@ -38,11 +38,14 @@ namespace Client
         private Welcome welcome = new Welcome();
         public AuthServiceInterface foob;
         private RestClient client;
+        private string username, password;
         public MainWindow()
         {
             InitializeComponent();
             Welcome.login = this;
             Registration.login = this;
+            username = null;
+            password = null;
 
             ChannelFactory<AuthServiceInterface> foobFactory;
             NetTcpBinding tcp = new NetTcpBinding();
@@ -67,16 +70,27 @@ namespace Client
             }
             else
             {
-                string name = textBoxName.Text;
-                string password = passwordBox.Password;
-                //
-                string result = null;
-                //foob.Login(in name, in password);
-                foob.Login(name, password, out result);
+                username = textBoxName.Text;
+                password = passwordBox.Password;
+                // login
+                LoginAction();
+            }
+        }
+
+        private async void LoginAction()
+        {
+            Task<string> loginTask = new Task<string>(LoginRequest);
+            loginTask.Start();
+            // set timeout for async call
+            int timeout = 4000;
+            if (await Task.WhenAny(loginTask, Task.Delay(timeout)) == loginTask)
+            {
+                string result = loginTask.Result;
+                // task completed within timeout
                 Console.WriteLine("result :  " + result);
                 if (result != null && result.Length > 0)
                 {
-                    welcome.textBoxWelcom.Text = name;//Sending value from one form to another form.  
+                    welcome.textBoxWelcom.Text = username;//Sending value from one form to another form.  
                     //welcome.Show();
                     //Close();
                     this.Opacity = 0;
@@ -84,13 +98,26 @@ namespace Client
                     welcome.Opacity = 1;
                     welcome.token = result;
                     welcome.Show();
-                    LoadAllServices(result);
+                    LoadAllServicesAsync(result);
                 }
                 else
                 {
                     errormessage.Text = "Sorry! Please enter existing name/password.";
                 }
             }
+            else
+            {
+                // timeout logic
+                MessageBox.Show("Sorry, search time out!", "Message");
+            }
+            
+        }
+
+        private string LoginRequest()
+        {
+            string result = null;
+            foob.Login(username, password, out result);
+            return result;
         }
 
         private void ButtonRegister_Click(object sender, RoutedEventArgs e)
@@ -100,16 +127,17 @@ namespace Client
             this.Opacity = 0;
             this.Hide();   
             registration.Opacity = 1;
+            registration.ClearValue();
             registration.Show();
         }
 
-        private void LoadAllServices(string token)
+        private async void LoadAllServicesAsync(string token)
         {
             string URL = "https://localhost:44388/";
             client = new RestClient(URL);
             RestRequest restRequest = new RestRequest("api/AllServices", Method.Get);
             restRequest.AddHeader("token", token);
-            RestResponse restResponse = client.Execute(restRequest);
+            RestResponse restResponse = await client.ExecuteAsync(restRequest);
             if (restResponse.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 // Console.WriteLine(restResponse.Content);
@@ -124,6 +152,13 @@ namespace Client
                 BadInfoDTO badInfoDTO = JsonConvert.DeserializeObject<BadInfoDTO>(restResponse.Content);
                 MessageBox.Show(badInfoDTO.Reason, badInfoDTO.Status);
             }
+        }
+
+        internal void ClearValue()
+        {
+            this.textBoxName.Text = "";
+            this.passwordBox.Password = "";
+            this.errormessage.Text = "";
         }
     }
 }

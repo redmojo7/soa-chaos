@@ -1,5 +1,5 @@
-﻿using Registry.DAO;
-using Registry.DTO;
+﻿using Authenticator;
+using Registry.DAO;
 using System;
 using System.Collections.Generic;
 using System.Linq;

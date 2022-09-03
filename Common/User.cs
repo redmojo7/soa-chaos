@@ -2,7 +2,13 @@
 {
     public class User
     {
-        string userName { get; set; }
-        string password { get; set; }
+        public User(string userName, string password)
+        {
+            this.userName = userName;
+            this.password = password;
+        }
+
+        public string userName { get; set; }
+        public string password { get; set; }
     }
 }

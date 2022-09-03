@@ -82,9 +82,17 @@ namespace Registry.DAO
         {
             List<ServiceInfo> serviceInfos = GetAllService();
             List<ServiceInfo> result = null;
-            if (serviceInfos != null && serviceInfos.Count > 0 && key != null && key != "")
+            if (serviceInfos != null && serviceInfos.Count > 0)
             {
-                result = serviceInfos.FindAll(p => p.Name.ToLower().Contains(key.ToLower()));
+                if (key != null && key != "")
+                {
+                    result = serviceInfos.FindAll(p => p.Name.ToLower().Contains(key.ToLower()));
+                }
+                else
+                {
+                    // return all services
+                    result = serviceInfos;
+                }
             }
             return result;
         }
@@ -94,8 +102,10 @@ namespace Registry.DAO
             string result = null;
             string token = string.Empty;
             if (headers.Contains("token"))
+            {
                 token = headers.GetValues("token").First();
                 foob.Validate(token, out result);
+            }
             return result;
         }
     }

@@ -9,7 +9,7 @@ namespace PublishingConsole
 {
     internal class PasswordUtil
     {
-        public static SecureString GetPassword()
+        public static string GetPassword()
         {
             var pwd = new SecureString();
             while (true)
@@ -33,7 +33,13 @@ namespace PublishingConsole
                     Console.Write("*");
                 }
             }
-            return pwd;
+            return ToPlainString(pwd);
+
+        }
+
+        public static string ToPlainString(SecureString secureStr)
+        {
+            return new System.Net.NetworkCredential(string.Empty,secureStr).Password;
         }
     }
 }

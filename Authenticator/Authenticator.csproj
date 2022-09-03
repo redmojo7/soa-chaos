@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="AuthServiceImpl.cs" />
     <Compile Include="AuthServiceInterface.cs" />
+    <Compile Include="BadInfoDTO.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User.cs" />
