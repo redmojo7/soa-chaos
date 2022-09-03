@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authenticator", "Authenticator\Authenticator.csproj", "{CD23EFB7-A06A-461C-BAAB-31669BD1EF0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{ABF24CAD-8516-4EA7-B993-2026D0E9E819}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,10 +45,6 @@ Global
 		{CD23EFB7-A06A-461C-BAAB-31669BD1EF0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD23EFB7-A06A-461C-BAAB-31669BD1EF0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD23EFB7-A06A-461C-BAAB-31669BD1EF0B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ABF24CAD-8516-4EA7-B993-2026D0E9E819}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ABF24CAD-8516-4EA7-B993-2026D0E9E819}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ABF24CAD-8516-4EA7-B993-2026D0E9E819}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ABF24CAD-8516-4EA7-B993-2026D0E9E819}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

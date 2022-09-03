@@ -13,6 +13,7 @@ using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Controls;
 using Authenticator;
+using System.Text.RegularExpressions;
 
 namespace Client
 {
@@ -97,6 +98,16 @@ namespace Client
 
         private async void btnCalculate_ClickAsync(object sender, RoutedEventArgs e)
         {
+            // check users inputs
+            if (!Regex.Match(textBoxoperand1.Text, "^\\d+$").Success)
+            {
+                MessageBox.Show("'operand1' is not a valid number.");
+            }
+            if (!Regex.Match(textBoxoperand2.Text, "^\\d+$").Success)
+            {
+                MessageBox.Show("'operand2' is not a valid number.");
+            }
+
             Console.WriteLine(current.ApiEndpoint);
             //
             RestClient client = new RestClient(current.ApiEndpoint);
@@ -106,6 +117,10 @@ namespace Client
             request.AddHeader("token", token);
             if (current.NumberOfOperands == 3)
             {
+                if (!Regex.Match(textBoxoperand3.Text, "^\\d+$").Success)
+                {
+                    MessageBox.Show("'operand3' is not a valid number.");
+                }
                 request.AddParameter("operand3", textBoxoperand3.Text);
             }
 

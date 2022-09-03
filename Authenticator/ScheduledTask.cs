@@ -36,7 +36,7 @@ namespace Authenticator
             Console.WriteLine("Performing scheduled task: Clearing token...");
             authService.ClearingToken();
 
-            System.Console.WriteLine(string.Format("[task-{0}][{1}:] {2}", logNumber, DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt"), "### Task Finished ###"));
+            System.Console.WriteLine(string.Format("[task-{0}][{1}:] {2}", logNumber, DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt"), "### Task Finished ###\n"));
             logNumber++;
             Schedule_Timer(intervalMS);
         }
