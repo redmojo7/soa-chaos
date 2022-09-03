@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.ServiceModel;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Authenticator
@@ -12,15 +14,8 @@ namespace Authenticator
     {
         static void Main(string[] args)
         {
-            
 
-            var a = GenerateToken();
-            Console.WriteLine(Guid.NewGuid());
-            Console.WriteLine(a);
-            var result = ValidateToken("a1c3ef46-bd7e-4ff1-b55e-8a82d71e3079", a);
-            Console.WriteLine(result);
-
-            Console.WriteLine("hey so like welcome to Auth server");
+            Console.WriteLine("Hey, welcome to Auth server");
             // This is the actual host service system
             ServiceHost host;
             // This represents a tcp/ip binding in the Windows network stack
@@ -35,52 +30,48 @@ namespace Authenticator
             // And open the host for business!
             host.Open();
             Console.WriteLine("System Online");
-            Console.ReadLine();
+
+            // set clearing token task
+            SetScheduleTask();
+            ConsoleKeyInfo cki;
+
+            // https://docs.microsoft.com/en-us/dotnet/api/system.console.keyavailable?redirectedfrom=MSDN&view=net-6.0#System_Console_KeyAvailable
+            do
+            {
+                Console.WriteLine("\nPress a key to display; press the 'x' key to quit.");
+
+                // Your code could perform some useful task in the following loop. However,
+                // for the sake of this example we'll merely pause for a quarter second.
+
+                while (Console.KeyAvailable == false)
+                    Thread.Sleep(250); // Loop until input is entered.
+
+                cki = Console.ReadKey(true);
+                Console.WriteLine("You pressed the '{0}' key.", cki.Key);
+            } while (cki.Key != ConsoleKey.X);
+
+
             // Don't forget to close the host after you're done!
             host.Close();
-
-
             Console.ReadLine();
-
         }
 
- 
-        public static string GenerateToken()
+        private static void SetScheduleTask()
         {
-            byte[] _time = BitConverter.GetBytes(DateTime.UtcNow.ToBinary());
-            byte[] _userName = Guid.Parse("a1c3ef46-bd7e-4ff1-b55e-8a82d71e3079").ToByteArray();
-            //byte[] _password = Guid.Parse("password").ToByteArray();
-            //byte[] data = new byte[_time.Length + _userName.Length + _password.Length];
-            byte[] data = new byte[_time.Length + _userName.Length];
-
-            System.Buffer.BlockCopy(_time, 0, data, 0, _time.Length);
-            System.Buffer.BlockCopy(_userName, 0, data, _time.Length, _userName.Length);
-            //System.Buffer.BlockCopy(_password, 0, data, _time.Length + _userName.Length, _password.Length);
-
-            return Convert.ToBase64String(data.ToArray());
-        }
-
-        public static string ValidateToken(string userName, string token)
-        {
-            var result = "";
-            byte[] data = Convert.FromBase64String(token);
-            byte[] _time = data.Take(8).ToArray();
-            byte[] _userName = data.Skip(8).ToArray();
-
-            DateTime when = DateTime.FromBinary(BitConverter.ToInt64(_time, 0));
-            if (when < DateTime.UtcNow.AddHours(-24))
+            bool successful = false;
+            while (!successful)
             {
-                //result.Errors.Add(TokenValidationStatus.Expired);
+                Console.WriteLine("\nPlease set the execution period for clearing the token (unit: minutes) :\t");
+                var minutesString = Console.ReadLine();
+                long intervalMinutes = 0;
+                if (long.TryParse(minutesString, out intervalMinutes))
+                {
+                    // intervalMinutes*60*1000 set as milliseconds
+                    ScheduledTask.Schedule_Timer(intervalMinutes * 60 * 1000);
+                    successful = true;
+                }
             }
-
-            Guid gUserName = new Guid(_userName);
-            if (gUserName.ToString() != userName)
-            {
-                Console.WriteLine("WrongGuid");
-            }
-            return result;
         }
-
 
     }
 }

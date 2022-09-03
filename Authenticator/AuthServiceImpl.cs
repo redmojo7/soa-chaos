@@ -92,5 +92,10 @@ namespace Authenticator
                 tokens = new List<string>();
             return tokens;
         }
+
+        public void ClearingToken()
+        {
+            File.WriteAllText(tokensFilePath, "");
+        }
     }
 }

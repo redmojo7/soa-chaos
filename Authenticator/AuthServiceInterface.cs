@@ -14,5 +14,8 @@ namespace Authenticator
 
         [OperationContract]
         void Validate(string token, out string result);
+        
+        [OperationContract]
+        void ClearingToken();
     }
 }
