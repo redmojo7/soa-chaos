@@ -125,6 +125,9 @@ namespace Client
 
         private async void btnSearch_Click(object sender, RoutedEventArgs e)
         {
+            SearchProgressBar.Visibility = Visibility.Visible;
+            SearchProgressBar.IsIndeterminate = true;
+
             string URL = "https://localhost:44388/";
             RestClient client = new RestClient(URL);
             RestRequest request = new RestRequest("api/search", Method.Get);
@@ -144,6 +147,8 @@ namespace Client
                 BadInfoDTO badInfoDTO = JsonConvert.DeserializeObject<BadInfoDTO>(restResponse.Content);
                 MessageBox.Show(badInfoDTO.Reason, badInfoDTO.Status);
             }
+            SearchProgressBar.IsIndeterminate = false;
+            SearchProgressBar.Visibility = Visibility.Hidden;
         }
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)
